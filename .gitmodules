@@ -1,0 +1,3 @@
+[submodule "module/Calypsi-Amiga"]
+	path = module/Calypsi-Amiga
+	url = https://github.com/hth313/Calypsi-Amiga.git
