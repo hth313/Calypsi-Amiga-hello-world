@@ -10,8 +10,8 @@ AMIGA = module/Calypsi-Amiga
 ASM_SRCS =
 C_SRCS = main.c
 
-MODEL = --code-model=large --data-model=small
-LIB_MODEL = lc-sd
+MODEL = --code-model=large --data-model=large
+LIB_MODEL = lc-ld
 
 AMIGA_LIB = $(AMIGA)/Amiga-68000-$(LIB_MODEL).a
 AMIGA_LINKER_RULES = $(AMIGA)/linker-files/Amiga.scm
