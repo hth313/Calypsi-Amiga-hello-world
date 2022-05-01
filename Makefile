@@ -14,7 +14,6 @@ MODEL = --code-model=large --data-model=large
 LIB_MODEL = lc-ld
 
 AMIGA_LIB = $(AMIGA)/Amiga-68000-$(LIB_MODEL).a
-AMIGA_LINKER_RULES = $(AMIGA)/linker-files/Amiga.scm
 
 # Object files
 OBJS = $(ASM_SRCS:%.s=obj/%.o) $(C_SRCS:%.c=obj/%.o)
@@ -27,7 +26,7 @@ obj/%.o: %.c
 	cc68k $(CFLAGS) $(MODEL) --list-file=$(@:%.o=%.lst) -o $@ $<
 
 hello.hunk:  $(OBJS) $(AMIGA_LIB)
-	ln68k -o $@ $^ $(AMIGA_LINKER_RULES) clib-$(CORE)-$(LIB_MODEL).a --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000
+	ln68k -o $@ $^ clib-$(CORE)-$(LIB_MODEL).a --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000
 
 $(AMIGA_LIB):
 	(cd $(AMIGA) ; make all)
