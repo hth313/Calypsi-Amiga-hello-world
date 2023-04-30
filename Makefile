@@ -2,7 +2,7 @@ VPATH = src
 
 CORE = 68000
 COMMON_OPTIONS = --core=$(CORE) --target=Amiga --debug
-CFLAGS = $(COMMON_OPTIONS) -I /home/hth/Documents/Amiga/NDK3.2/Include_H --fd /home/hth/Documents/Amiga/NDK3.2/FD
+CFLAGS = $(COMMON_OPTIONS)
 
 AMIGA = module/Calypsi-Amiga
 
