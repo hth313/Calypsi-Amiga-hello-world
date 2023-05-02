@@ -13,8 +13,6 @@ C_SRCS = main.c
 MODEL = --code-model=large --data-model=large
 LIB_MODEL = lc-ld
 
-AMIGA_LIB = $(AMIGA)/Amiga-68000-$(LIB_MODEL).a
-
 # Object files
 OBJS = $(ASM_SRCS:%.s=obj/%.o) $(C_SRCS:%.c=obj/%.o)
 OBJS_DEBUG = $(ASM_SRCS:%.s=obj/%-debug.o) $(C_SRCS:%.c=obj/%-debug.o)
@@ -25,13 +23,10 @@ obj/%.o: %.s
 obj/%.o: %.c
 	cc68k $(CFLAGS) $(MODEL) --list-file=$(@:%.o=%.lst) -o $@ $<
 
-hello.hunk:  $(OBJS) $(AMIGA_LIB)
-	ln68k -o $@ $^ clib-$(CORE)-$(LIB_MODEL).a --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000
-
-$(AMIGA_LIB):
-	(cd $(AMIGA) ; make all)
+hello.hunk:  $(OBJS)
+	ln68k -o $@ $^ --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000
 
 clean:
-	-rm $(OBJS) $(OBJS:%.o=%.lst) $(OBJS_DEBUG) $(OBJS_DEBUG:%.o=%.lst) $(AMIGA_LIB)
+	-rm $(OBJS) $(OBJS:%.o=%.lst) $(OBJS_DEBUG) $(OBJS_DEBUG:%.o=%.lst)
 	-rm hello.elf hello.hunk hello-debug.lst hello-Amiga.lst
 	-(cd $(AMIGA) ; make clean)
