@@ -4,14 +4,11 @@ CORE = 68000
 COMMON_OPTIONS = --core=$(CORE) --target=Amiga --debug
 CFLAGS = $(COMMON_OPTIONS)
 
-AMIGA = module/Calypsi-Amiga
-
 # Common source files
 ASM_SRCS =
 C_SRCS = main.c
 
 MODEL = --code-model=large --data-model=large
-LIB_MODEL = lc-ld
 
 # Object files
 OBJS = $(ASM_SRCS:%.s=obj/%.o) $(C_SRCS:%.c=obj/%.o)
@@ -24,9 +21,8 @@ obj/%.o: %.c
 	cc68k $(CFLAGS) $(MODEL) --list-file=$(@:%.o=%.lst) -o $@ $<
 
 hello.hunk:  $(OBJS)
-	ln68k -o $@ $^ --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000
+	ln68k -o $@ $^ --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000 --semi-hosted
 
 clean:
 	-rm $(OBJS) $(OBJS:%.o=%.lst) $(OBJS_DEBUG) $(OBJS_DEBUG:%.o=%.lst)
-	-rm hello.elf hello.hunk hello-debug.lst hello-Amiga.lst
-	-(cd $(AMIGA) ; make clean)
+	-rm hello.elf hello.hunk hello-Amiga.lst
