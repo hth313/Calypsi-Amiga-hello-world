@@ -20,9 +20,9 @@ obj/%.o: %.s
 obj/%.o: %.c
 	cc68k $(CFLAGS) $(MODEL) --list-file=$(@:%.o=%.lst) -o $@ $<
 
-hello.hunk:  $(OBJS)
-	ln68k -o $@ $^ --target=amiga --output-format=Hunk --list-file=hello-Amiga.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000 --semi-hosted
+hello.elf:  $(OBJS)
+	ln68k -o $@ $^ --target=amiga --output-format=Hunk --list-file=hello.lst --cross-reference --rtattr printf=reduced --rtattr cstartup=amiga --stack-size=5000 --semi-hosted
 
 clean:
 	-rm $(OBJS) $(OBJS:%.o=%.lst) $(OBJS_DEBUG) $(OBJS_DEBUG:%.o=%.lst)
-	-rm hello.elf hello.hunk hello-Amiga.lst
+	-rm hello.elf hello.hunk hello.lst
